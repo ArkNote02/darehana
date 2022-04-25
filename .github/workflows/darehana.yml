@@ -2,7 +2,7 @@ name: darehana
 
 on:
   schedule:
-    - cron: '* * * * *'
+    - cron: '0 7 * * 1-4'
   workflow_dispatch:
 
 jobs:
@@ -18,14 +18,15 @@ jobs:
 
       - name: commit new file
         run: |
-          git remote set-url origin https://github-actions:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}
+          git remote set-url origin "https://github-actions:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}"
           git config --global user.name "${GITHUB_ACTOR}"
           git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
           DATE=`TZ=Asia/Tokyo date '+%Y%m%d'`
-          mkdir ${DATE}; cd ${DATE}
+          mkdir ${DATE}
+          cd ${DATE}
           curl "https://radiko.jp/v2/api/noa?station_id=FMT&ft=${DATE}130000&to=${DATE}145500" -o ${DATE}.log
           git add .
-          git commit -m "${DATE}"
+          git commit -m "workflow action ${DATE}"
           git push origin HEAD:${GITHUB_REF}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
