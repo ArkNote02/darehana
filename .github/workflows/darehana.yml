@@ -15,10 +15,6 @@ jobs:
           git config --global user.name "${GITHUB_ACTOR}"
           git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
           touch aaaa
-          //DATE=`date '+%Y%m%d'`
-          //mkdir ${DATE}
-          //cd ${DATE}
-          //crul https://radiko.jp/v2/api/noa?station_id=FMT&ft=${DATE}130000&to=${DATE}145500 > ${DATE}.xml
           git add .
           git commit -m "workflow"
           git push origin HEAD:${GITHUB_REF}
