@@ -1,0 +1,25 @@
+name: darehana
+
+on:
+  schedule:
+    - cron: '16 * * * *'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: update
+        run: |
+          git config user.name "action"
+          git config user.email "action@github.com"
+          touch aaaa
+          //DATE=`date '+%Y%m%d'`
+          //mkdir ${DATE}
+          //cd ${DATE}
+          //crul https://radiko.jp/v2/api/noa?station_id=FMT&ft=${DATE}130000&to=${DATE}145500 > ${DATE}.xml
+          git add .
+          git commit -m "workflow"
+          git push origin master
