@@ -10,25 +10,22 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Print date
+      - name: print date
         run: |
-          # UTC
-          echo $(date '+%Y-%m-%d %H:%M:%S(%z)')
-          # JST
           echo $(TZ=Asia/Tokyo date '+%Y-%m-%d %H:%M:%S(%z)')
 
       - uses: actions/checkout@v2
-        with:
-          fetch-depth: 1
 
-      - name: update
+      - name: commit new file
         run: |
           git remote set-url origin https://github-actions:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}
           git config --global user.name "${GITHUB_ACTOR}"
           git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
-          touch aaaaあああ
+          DATE=`date '+%Y%m%d'`
+          mkdir ${DATE}; cd ${DATE}
+          curl https://radiko.jp/v2/api/noa?station_id=FMT&ft=20220425130000&to=20220425145500 > ${DATE}.log
           git add .
-          git commit -m "workflow"
+          git commit -m "${DATE}"
           git push origin HEAD:${GITHUB_REF}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
