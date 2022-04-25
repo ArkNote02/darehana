@@ -12,7 +12,7 @@ jobs:
     steps:
       - name: print date
         run: |
-          echo $(TZ=Asia/Tokyo date '+%Y-%m-%d %H:%M:%S(%z)')
+          echo $(TZ=Asia/Tokyo date '+%Y-%m-%dT%H:%M:%S%z')
 
       - uses: actions/checkout@v2
 
@@ -21,9 +21,9 @@ jobs:
           git remote set-url origin https://github-actions:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}
           git config --global user.name "${GITHUB_ACTOR}"
           git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
-          DATE=`date '+%Y%m%d'`
+          DATE=`TZ=Asia/Tokyo date '+%Y%m%d'`
           mkdir ${DATE}; cd ${DATE}
-          curl https://radiko.jp/v2/api/noa?station_id=FMT&ft=20220425130000&to=20220425145500 > ${DATE}.log
+          curl https://radiko.jp/v2/api/noa?station_id=FMT&ft=${DATE}130000&to=${DATE}145500 -o ${DATE}.log
           git add .
           git commit -m "${DATE}"
           git push origin HEAD:${GITHUB_REF}
