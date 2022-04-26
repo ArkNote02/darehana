@@ -31,9 +31,7 @@ jobs:
           D=`date '+%d'`
           mkdir -p ./${Y}/${M}/
           cd ./${Y}/${M}/
-          if [ -e ${Y}${M}${D}.xml ]; then
-            rm ${Y}${M}${D}.xml
-  　　　　 fi
+          rm -f ${Y}${M}${D}.xml
           curl "https://radiko.jp/v2/api/noa?station_id=FMT&ft=${Y}${M}${D}130000&to=${Y}${M}${D}145500" -o ${Y}${M}${D}.xml
 
       # プッシュ
