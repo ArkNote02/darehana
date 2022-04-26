@@ -19,9 +19,6 @@ jobs:
       # チェックアウト
       - name: checkout
         uses: actions/checkout@v2
-        run: |
-          git config --global user.name "${GITHUB_ACTOR}"
-          git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
 
       # ダウンロード
       - name: dowonload
@@ -39,6 +36,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          git config --global user.name "${GITHUB_ACTOR}"
+          git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
           git add .
           git commit -m "Scheduled action"
           git push origin master
