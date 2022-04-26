@@ -17,11 +17,11 @@ jobs:
 
     steps:
       # チェックアウト
-      - name: checkout
+      - name: Checkout
         uses: actions/checkout@v2
 
       # ダウンロード
-      - name: dowonload
+      - name: Dowonload file
         run: |
           Y=`date '+%Y'`
           M=`date '+%m'`
@@ -32,7 +32,7 @@ jobs:
           curl "https://radiko.jp/v2/api/noa?station_id=FMT&ft=${Y}${M}${D}130000&to=${Y}${M}${D}145500" -o ${Y}${M}${D}.xml
 
       # プッシュ
-      - name: push
+      - name: Push
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
