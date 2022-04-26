@@ -19,6 +19,9 @@ jobs:
       # チェックアウト
       - name: checkout
         uses: actions/checkout@v2
+        run: |
+          git config --global user.name "${GITHUB_ACTOR}"
+          git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
 
       # ダウンロード
       - name: dowonload
@@ -28,13 +31,16 @@ jobs:
           D=`date '+%d'`
           mkdir -p ./${Y}/${M}/
           cd ./${Y}/${M}/
+          if [ -e ${Y}${M}${D}.xml ]; then
+            rm ${Y}${M}${D}.xml
+  　　　　 fi
           curl "https://radiko.jp/v2/api/noa?station_id=FMT&ft=${Y}${M}${D}130000&to=${Y}${M}${D}145500" -o ${Y}${M}${D}.xml
 
       # プッシュ
       - name: push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git add .
           git commit -m "Scheduled action"
           git push origin master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
