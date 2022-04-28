@@ -16,6 +16,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # ロギング
+      - name: Print date
+        run: |
+          echo `date '+%Y%m%d'`
+
       # チェックアウト
       - name: Checkout
         uses: actions/checkout@v2
