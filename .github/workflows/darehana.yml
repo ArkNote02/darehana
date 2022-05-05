@@ -34,7 +34,10 @@ jobs:
           mkdir -p ./${Y}/${M}/
           cd ./${Y}/${M}/
           rm -f ${Y}${M}${D}.xml
+          if curl "http://radiko.jp/v3/program/today/JP13.xml" | grep darehana > /dev/null; then
+          echo "download file..."
           curl "https://radiko.jp/v2/api/noa?station_id=FMT&ft=${Y}${M}${D}130000&to=${Y}${M}${D}145500" -o ${Y}${M}${D}.xml
+          fi
 
       # プッシュ
       - name: Push
